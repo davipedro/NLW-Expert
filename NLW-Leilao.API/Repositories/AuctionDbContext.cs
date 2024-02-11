@@ -5,6 +5,8 @@ namespace NLW_Leilao.API.Repositories;
 
 public class AuctionDbContext : DbContext
 {
+    private string connectionString = Environment.GetEnvironmentVariable("EF_NLW-AUCTION_CONNECTION_STRING");
+
     protected readonly IConfiguration Configuration;
 
     public DbSet<Auction> auctions { get; set; }
@@ -18,6 +20,6 @@ public class AuctionDbContext : DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=D02dps$;Database=nlw_auction");
+        optionsBuilder.UseNpgsql(connectionString);
     }
 }
