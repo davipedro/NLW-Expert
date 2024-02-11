@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using NLW_Leilao.API.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddEntityFrameworkNpgsql()
+    .AddDbContext<AuctionDbContext>(db => db.UseNpgsql(builder.Configuration.GetConnectionString("ApiDatabaseConfig")));
 
 var app = builder.Build();
 
