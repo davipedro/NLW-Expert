@@ -2,17 +2,22 @@
 using NLW_Leilao.API.Entities;
 using NLW_Leilao.API.Repositories;
 
-namespace NLW_Leilao.API.UseCases.Auctions.GetCurrent;
+namespace NLW_Leilao.API.Services;
 
-public class GetCurrentAuctionUseCase
+public class AuctionService
 {
-    public Auction Execute()
-    {
-        var repository = new AuctionDbContext();
+    private AuctionDbContext Repository;
 
+    public AuctionService()
+    {
+        this.Repository = new AuctionDbContext();
+    }
+
+    public Auction GetFirstAuction()
+    {
         var today = DateTime.Now;
 
-        var firstAuction = repository
+        var firstAuction = Repository
             .auctions
             .Include(auction => auction.Items)
             .FirstOrDefault(auction => today >= auction.Starts && today <= auction.Ends);
