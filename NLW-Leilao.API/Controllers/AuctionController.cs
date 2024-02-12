@@ -4,9 +4,7 @@ using NLW_Leilao.API.UseCases.Auctions.GetCurrent;
 
 namespace NLW_Leilao.API.Controllers;
 
-[Route("api/v1/[controller]")]
-[ApiController]
-public class AuctionController : ControllerBase
+public class AuctionController : NlwAuctionBaseController
 {
     [HttpGet]
     [ProducesResponseType(typeof(Auction) , StatusCodes.Status200OK)]
