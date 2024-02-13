@@ -3,23 +3,23 @@ using NLW_Leilao.API.Entities;
 
 namespace NLW_Leilao.API.Repositories;
 
-public class AuctionDbContext : DbContext
+public class AuctionDbContext : NlwAuctionBaseServiceConfig
 {
-    private string connectionString = Environment.GetEnvironmentVariable("EF_NLW-AUCTION_CONNECTION_STRING");
+    private readonly string ConnectionString;
 
-    protected readonly IConfiguration Configuration;
-
-    public DbSet<Auction> auctions { get; set; }
-
-    public AuctionDbContext() { }
-
-    public AuctionDbContext(IConfiguration configuration)
+    public AuctionDbContext()
     {
-        this.Configuration = configuration;
+        this.ConnectionString = base.ConnectionString;
     }
-    
+
+    public AuctionDbContext(DbContextOptions<AuctionDbContext> options) : base(options)
+    {
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(connectionString);
+        optionsBuilder.UseNpgsql(ConnectionString);
     }
+
+    public DbSet<Auction> auctions { get; set;}
 }
